@@ -5,102 +5,136 @@
         min-height: auto;
     }
 
-    .container{
-            width: 100% !important;
-            padding-right: 0px !important;
-            padding-left: 15px !important;
-            margin-right: auto !important;
-            margin-left: auto !important;
+    .authentication-inner {
+        width: 100%;
+        height: 100vh !important;
+        background-image: linear-gradient(to bottom, #13a4bf, #536ec0,#9537c1);
+
+    }
+
+    .authentication-inner img {
+        width: 80%;
+        object-fit: contain;
+    }
+
+    form {
+        width: 70%;
+        margin: 10px auto;
+
+    }
+
+    .user {
+        width: 70px;
+        height: 70px;
+        background: rgb(226, 190, 155, .2);
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px auto;
+    }
+    .user i {
+        font-size: 38px;
+        color: #eee;
+    }
+
+    form .input-group .input-group-prepend span{
+        background-color: rgb(226, 190, 155, .5) !important;
+        border: none !important;
+
+    }
+
+    form .input-group input {
+        border: none !important;
+        outline: none !important;
+        background-color: rgb(226, 190, 155, .2) !important;
+        color: #eee !important;
+    }
+
+    @media(min-width:1500px) {
+        .user {
+            width: 100px;
+            height: 100px;
+            background: rgb(226, 190, 155, .2);
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
         }
-        @media (min-width: 1000px){
-            .container {
-                max-width: 100%;
-            }
+
+        .user i {
+            font-size: 48px;
+            color: #eee;
         }
+        form .input-group input {
+        border: none !important;
+        outline: none !important;
+        padding: 25px 20px !important;
+        background-color: rgb(226, 190, 155, .2) !important;
+    }
+    }
+
+    form .input-group input:focus {
+        outline: none !important;
+    }
+
+    form .input-group input::placeholder {
+        color: #fff;
+    }
+
+    form .sigin-btn {
+        background: linear-gradient(to right, #13a4bf, #5e85fa,#4c32dd);
+    }
+
+
 </style>
 @endsection
 @section('content')
 <div class="authentication-wrapper authentication-cover">
     <div class="authentication-inner row m-0 p-0">
-        <!-- /Left Text -->
-        <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center bg-info">
-            <div class="flex-row text-center mx-auto">
-                <img src="{{ asset('logo.svg') }}" alt="Auth Cover Bg color" width="520" class="img-fluid authentication-cover-img" data-app-light-img="pages/login-light.png" data-app-dark-img="pages/login-dark.png" />
-                <div class="mx-auto mt-3">
-                    <h3>Beyond Coding</h3>
-                    <p>
-                        Perfectly suited for all level of developers which helps you to <br />
-                        kick start your next big projects & Applications.
-                    </p>
-                </div>
-            </div>
+        <div class="col-lg-4 offset-lg-2 d-flex align-items-center justify-content-center">
+            <img src="{{asset('logo.svg')}}" alt="">
         </div>
-        <!-- /Left Text -->
-
-        <!-- Login -->
-        <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4 m-0" style="background: rgb(238, 250, 236);height : 100vh !important">
-            <div class="w-px-400 mx-auto">
-                <!-- Logo -->
-                <div class="app-brand mb-4">
-                    <a href="/" class="app-brand-link gap-2 mb-2">
-                        <!-- {{-- <span class="app-brand-logo demo">
-                                <img src="{{ asset('hmmlogo.png') }}" style="width: 26px;height:26px;" alt="">
-                            </span> --}} -->
-                        <span class="app-brand-text demo h3 mb-0 fw-bolder text-dark">Beyond Coding</span>
-                    </a>
+        <div class="col-lg-5 d-flex align-items-center justify-content-start">
+            <form id="formAuthentication" class="" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="user text-center mb-4">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
                 </div>
-                <!-- /Logo -->
-                <h4 class="mb-2">Welcome to Beyond Coding! 👋</h4>
-                <p class="mb-4">Please sign-in to your account and start the adventure</p>
+                <div class="mb-4 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm"><i class='text-white bx bxs-user'></i></span>
+                      </div>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email or username" autofocus />
+                    @if ($errors->has('email'))
+                    <div class="small text-danger">
+                        {{ $errors->first('email') }}
+                    </div>
+                    @endif
+                </div>
+                <div class="mb-4 form-password-toggle input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm"><i class='text-white bx bxs-lock-alt'></i></span>
+                    </div>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
 
-                <form id="formAuthentication" class="mb-3" method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email </label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email or username" autofocus />
-                        @if ($errors->has('email'))
-                        <div class="small text-danger">
-                            {{ $errors->first('email') }}
-                        </div>
-                        @endif
+                    @if ($errors->has('password'))
+                    <div class="small text-danger">
+                        {{ $errors->first('password') }}
                     </div>
-                    <div class="mb-3 form-password-toggle">
-                        <div class="d-flex justify-content-between">
-                            <label class="form-label" for="password">Password</label>
-                            <!-- {{-- <a href="auth-forgot-password-cover.html">
-                                    <small>Forgot Password?</small>
-                                </a> --}} -->
-                        </div>
-                        <!-- {{-- <div class="input-group input-group-merge"> --}} -->
-                        <fieldset class="form-group position-relative">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
-                            <div class="form-control-position">
-                                <i class="bx bx-show mb-1" id="pwd-show"></i>
-                            </div>
-                        </fieldset>
-                        <!-- {{-- <input type="password" id="password" class="form-control" name="password"
-                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                    aria-describedby="password" />
-                                <span class="input-group-text cursor-pointer" id="pwd-show"><i
-                                        class="bx bx-hide"></i></span> --}} -->
-                        @if ($errors->has('password'))
-                        <div class="small text-danger">
-                            {{ $errors->first('password') }}
-                        </div>
-                        @endif
-                        <!-- {{-- </div> --}} -->
+                    @endif
+                    <!-- {{-- </div> --}} -->
+                </div>
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" name="remember" type="checkbox" id="remember-me" />
+                        <label class="form-check-label text-white" for="remember-me "> Remember Me </label>
                     </div>
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" name="remember" type="checkbox" id="remember-me" />
-                            <label class="form-check-label" for="remember-me"> Remember Me </label>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary d-grid w-100" id="sign-in">Sign in</button>
-                </form>
-            </div>
+                </div>
+                <button class="btn sigin-btn d-grid w-100 text-white" id="sign-in">Sign in</button>
+            </form>
         </div>
-        <!-- /Login -->
     </div>
 </div>
 @endsection
